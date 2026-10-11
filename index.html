@@ -1,0 +1,321 @@
+<title>Treefall Playbill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap">
+<style>
+  :root {
+    color-scheme: light;
+    --paper: #F3E9D2;
+    --paper-deep: #E8D9B7;
+    --card: #FBF4E4;
+    --ink: #2A1E1A;
+    --ink-soft: #5A4A40;
+    --plum: #5B2638;
+    --plum-deep: #3E1826;
+    --gold: #B8913A;
+    --sage: #5E6B3E;
+    --rule: #CDB78C;
+    --display: "Barlow Condensed", "Arial Narrow", "Helvetica Neue", sans-serif;
+    --body: "Alegreya Sans", "Gill Sans", "Trebuchet MS", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 18px/1.55 var(--body);
+    background-image: radial-gradient(circle at 20% 10%, rgba(255,255,255,.35), transparent 40%),
+                      radial-gradient(circle at 80% 70%, rgba(120,90,50,.06), transparent 45%);
+  }
+  a { color: var(--plum); }
+  .wrap { max-width: 1120px; margin: 0 auto; padding-inline: 20px; }
+
+  /* Curtain + marquee */
+  .stage {
+    background: linear-gradient(180deg, var(--plum-deep), var(--plum) 70%);
+    padding-block: 28px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .stage::before, .stage::after {
+    content: ""; position: absolute; top: 0; bottom: 0; width: 9%;
+    background: repeating-linear-gradient(90deg, rgba(0,0,0,.18) 0 10px, rgba(255,255,255,.04) 10px 22px);
+  }
+  .stage::before { left: 0; } .stage::after { right: 0; }
+  .marquee {
+    position: relative; z-index: 1;
+    background: var(--card);
+    border: 3px solid var(--ink);
+    outline: 2px solid var(--gold); outline-offset: -11px;
+    padding: 30px 24px 26px;
+    text-align: center;
+    max-width: 760px; margin: 0 auto 30px;
+  }
+  .marquee .bulbs { display: flex; justify-content: space-between; padding-inline: 4px; }
+  .marquee .bulbs i { width: 11px; height: 11px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 2px var(--ink) inset; }
+  .marquee h1 {
+    font: 800 clamp(56px, 11vw, 112px)/.95 var(--display);
+    letter-spacing: .02em; margin: 14px 0 8px; color: var(--plum);
+  }
+  .marquee p { margin: 0 auto; max-width: 52ch; font-size: 19px; color: var(--ink-soft); text-wrap: balance; }
+  .screen {
+    position: relative; z-index: 1;
+    max-width: 960px; margin: 0 auto;
+    border: 3px solid var(--ink); background: #000;
+    box-shadow: 0 18px 40px rgba(0,0,0,.35);
+  }
+  .screen video { display: block; width: 100%; height: auto; aspect-ratio: 16/9; }
+  .screen-note { position: relative; z-index: 1; text-align: center; color: #F1DFC9; font: 600 15px/1.4 var(--display); letter-spacing: .12em; text-transform: uppercase; margin-top: 14px; }
+
+  /* Sections */
+  section { padding-block: 56px 8px; }
+  .label {
+    font: 700 15px/1 var(--display); letter-spacing: .18em; text-transform: uppercase; color: var(--plum);
+    display: flex; align-items: center; gap: 12px; margin-bottom: 10px;
+  }
+  .label::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
+  h2 { font: 700 clamp(30px, 4.6vw, 44px)/1.05 var(--display); margin: 0 0 18px; text-wrap: balance; }
+  p.lead { font-size: 20px; max-width: 64ch; margin: 0 0 8px; }
+
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 0; border: 2px solid var(--ink); background: var(--card); margin-top: 26px; }
+  .facts div { padding: 14px 16px; border-right: 1px solid var(--rule); }
+  .facts div:last-child { border-right: 0; }
+  .facts dt { font: 700 13px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 6px; }
+  .facts dd { margin: 0; font: 600 21px/1.2 var(--display); }
+
+  .pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 22px; }
+  .pillar { display: grid; grid-template-rows: auto auto 1fr; gap: 10px; }
+  .pillar img { width: 100%; aspect-ratio: 16/9; object-fit: cover; border: 2px solid var(--ink); display: block; }
+  .pillar h3 { font: 700 26px/1.1 var(--display); margin: 4px 0 0; }
+  .pillar p { margin: 0; color: var(--ink-soft); }
+
+  .acts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 2px solid var(--ink); }
+  .act { background: var(--card); border-right: 1px solid var(--rule); }
+  .act:last-child { border-right: 0; }
+  .act img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; border-bottom: 1px solid var(--rule); }
+  .act .txt { padding: 14px 16px 18px; }
+  .act .no { font: 700 13px/1 var(--display); letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+  .act h3 { font: 700 26px/1.1 var(--display); margin: 6px 0 4px; }
+  .act p { margin: 0; color: var(--ink-soft); font-size: 17px; }
+
+  .cast { width: 100%; border-collapse: collapse; background: var(--card); border: 2px solid var(--ink); font-variant-numeric: tabular-nums; }
+  .cast th, .cast td { padding: 11px 16px; border-bottom: 1px dotted var(--rule); text-align: left; vertical-align: baseline; }
+  .cast tr:last-child td { border-bottom: 0; }
+  .cast td.n { font: 800 30px/1 var(--display); color: var(--plum); width: 90px; text-align: right; }
+  .cast td.k { font: 700 20px/1.2 var(--display); width: 220px; }
+  .cast td.d { color: var(--ink-soft); }
+  .table-wrap { overflow-x: auto; }
+
+  .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .gallery figure { margin: 0; }
+  .gallery img { width: 100%; display: block; border: 2px solid var(--ink); }
+  .gallery figcaption { font: 600 15px/1.3 var(--display); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin-top: 6px; }
+
+  .status { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .status ul { margin: 0; padding-left: 20px; }
+  .status li { margin-bottom: 6px; }
+  .status .box { background: var(--card); border: 2px solid var(--ink); padding: 18px 20px; }
+  .status h3 { font: 700 22px/1.1 var(--display); margin: 0 0 10px; }
+  .tag { display: inline-block; font: 700 12px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--card); background: var(--sage); padding: 5px 8px; margin-bottom: 10px; }
+  .tag.next { background: var(--plum); }
+
+  .contact { text-align: center; padding-block: 56px 72px; }
+  .contact .ticket {
+    display: inline-block; background: var(--card); border: 3px dashed var(--plum); padding: 22px 30px; max-width: 100%;
+  }
+  .contact .ticket h3 { font: 800 32px/1 var(--display); color: var(--plum); margin: 0 0 6px; letter-spacing: .04em; }
+  .contact .ticket p { margin: 0; color: var(--ink-soft); }
+  .fill { background: #F6E3A8; padding: 0 4px; }
+  footer { text-align: center; color: var(--ink-soft); font-size: 14px; padding-block: 0 40px; }
+
+  @media (max-width: 760px) {
+    .acts { grid-template-columns: 1fr; }
+    .act { border-right: 0; border-bottom: 1px solid var(--rule); }
+    .act:last-child { border-bottom: 0; }
+    .gallery, .status { grid-template-columns: 1fr; }
+    .facts div { border-right: 0; border-bottom: 1px solid var(--rule); }
+    .cast td.k { width: auto; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto; } }
+
+  .lang { position: absolute; top: calc(14px + env(safe-area-inset-top, 0px)); right: 20px; z-index: 3; display: flex; border: 2px solid var(--ink); background: var(--card); }
+  .lang button { font: 700 14px/1 var(--display); letter-spacing: .14em; padding: 8px 12px; border: 0; background: transparent; color: var(--ink); cursor: pointer; }
+  .lang button[aria-pressed="true"] { background: var(--plum); color: var(--card); }
+  .lang button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+</style>
+
+<header class="stage">
+  <div class="lang" role="group" aria-label="Language"><button type="button" id="lang-en" data-lang="en" aria-pressed="true">EN</button><button type="button" id="lang-tr" data-lang="tr" aria-pressed="false">TR</button></div>
+  <div class="wrap">
+    <div class="marquee">
+      <div class="bulbs" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <h1>TREEFALL</h1>
+      <p>A roguelike tower defense where a living tree carries a tower of living weapons, drawn like a 1930s cartoon and staged like a paper theatre.</p>
+      <div class="bulbs" aria-hidden="true" style="margin-top:18px"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+    <div class="screen">
+      <video controls playsinline preload="metadata" poster="img/01-tower-grove.jpg">
+        <source src="trailer.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="screen-note">Trailer · 90 seconds · in-engine footage</div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section>
+    <div class="label">The show</div>
+    <h2>Build a tower one floor at a time, and keep it standing.</h2>
+    <p class="lead">Every floor of the tower is a weapon with a face: a minigun, a beehive, a flamethrower. Floors buff the floors next to them, two legendary neighbours fuse into an evolved weapon, and every boss you beat leaves a curse that makes the next act harder and the score bigger.</p>
+    <dl class="facts">
+      <div><dt>Genre</dt><dd>Roguelike tower defense</dd></div>
+      <div><dt>Modes</dt><dd>Normal · Hard · Endless</dd></div>
+      <div><dt>Engine</dt><dd>Unity 6</dd></div>
+      <div><dt>Languages</dt><dd>English · Turkish</dd></div>
+      <div><dt>Target</dt><dd>PC (Steam) · 2027</dd></div>
+    </dl>
+  </section>
+
+  <section>
+    <div class="label">Why it plays differently</div>
+    <h2>Three decisions in every camp</h2>
+    <div class="pillars">
+      <div class="pillar">
+        <img src="img/02-tower-desert.jpg" alt="A six-floor tower of weapons in the pale desert" loading="lazy">
+        <h3>Stack and link</h3>
+        <p>Floor order matters. Matching neighbours form pairs such as Oiled Flame or Charged Beam, and the non-firing Foreman floor powers the weapons above and below it.</p>
+      </div>
+      <div class="pillar">
+        <img src="img/04-evolution.jpg" alt="Two legendary floors fusing into an evolved weapon" loading="lazy">
+        <h3>Fuse</h3>
+        <p>Two adjacent Legendary floors can fuse into one of ten evolutions, freeing a slot and changing how the weapon fires.</p>
+      </div>
+      <div class="pillar">
+        <img src="img/07-curse-menu.jpg" alt="The curse menu after a boss" loading="lazy">
+        <h3>Take the curse</h3>
+        <p>After each boss you must pick a curse. Rarer curses hit harder and pay more score, so record runs are deliberate risks.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="label">Programme</div>
+    <h2>Hard mode: three acts, then endless</h2>
+    <div class="acts">
+      <div class="act">
+        <img src="img/01-tower-grove.jpg" alt="The grove" loading="lazy">
+        <div class="txt"><div class="no">Act I · waves 1–16</div><h3>The Grove</h3><p>Slimes, shields and splitters. Learn to build.</p></div>
+      </div>
+      <div class="act">
+        <img src="img/05-boss-ash-shell.jpg" alt="Ash Shell firing its mouth laser" loading="lazy">
+        <div class="txt"><div class="no">Act II · waves 17–32</div><h3>The Pale Desert</h3><p>Sand gulpers and ash flies. Ash Shell climbs out of a rift at wave 32.</p></div>
+      </div>
+      <div class="act">
+        <img src="img/06-boss-bog-mother.jpg" alt="Bog Mother rising from the marsh" loading="lazy">
+        <div class="txt"><div class="no">Act III · waves 33–48</div><h3>The Black Marsh</h3><p>Leeches and lantern bugs. Bog Mother rises at wave 48; endless follows.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="label">Cast list</div>
+    <h2>Content in the current build</h2>
+    <div class="table-wrap">
+      <table class="cast">
+        <tr><td class="n">27</td><td class="k">Weapon floors</td><td class="d">17 families including two support floors and the Foreman, plus 10 evolutions</td></tr>
+        <tr><td class="n">13</td><td class="k">Enemy types</td><td class="d">6 base slimes and 7 biome variants, two of them flying; any of them can roll one of 8 affixes</td></tr>
+        <tr><td class="n">5</td><td class="k">Bosses</td><td class="d">Three grove bosses, Ash Shell and Bog Mother</td></tr>
+        <tr><td class="n">3</td><td class="k">Biomes</td><td class="d">Grove, Pale Desert, Black Marsh</td></tr>
+        <tr><td class="n">15</td><td class="k">Curses</td><td class="d">Four rarities each, stacking without limit in endless</td></tr>
+        <tr><td class="n">11</td><td class="k">Homes</td><td class="d">Starting homes that change one rule each, with their own animated tree</td></tr>
+        <tr><td class="n">64</td><td class="k">Quests</td><td class="d">Unlock weapons, homes, curses, charms, items and cosmetics</td></tr>
+        <tr><td class="n">11</td><td class="k">Challenges</td><td class="d">Fixed rule sets with unique rewards, plus a boss rush</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="label">Stills</div>
+    <h2>From the build</h2>
+    <div class="gallery">
+      <figure><img src="img/03-tower-marsh.jpg" alt="Tower in the Black Marsh" loading="lazy"><figcaption>Black Marsh</figcaption></figure>
+      <figure><img src="img/08-home-selection.jpg" alt="Home selection screen" loading="lazy"><figcaption>Choosing a home</figcaption></figure>
+      <figure><img src="img/05-boss-ash-shell.jpg" alt="Ash Shell boss fight" loading="lazy"><figcaption>Ash Shell, wave 32</figcaption></figure>
+      <figure><img src="img/04-evolution.jpg" alt="Evolved weapon floor" loading="lazy"><figcaption>An evolved floor</figcaption></figure>
+    </div>
+  </section>
+
+  <section>
+    <div class="label">Status</div>
+    <h2>Where the production stands</h2>
+    <div class="status">
+      <div class="box">
+        <span class="tag">Done</span>
+        <h3>Playable, content-complete core</h3>
+        <ul>
+          <li>Normal (24 waves), Hard (48 waves + endless), challenges, boss rush</li>
+          <li>Full art pass in one style, original ragtime score and synthesized sound effects</li>
+          <li>Quest and unlock progression, collection with item pool toggles</li>
+          <li>English and Turkish text throughout</li>
+        </ul>
+      </div>
+      <div class="box">
+        <span class="tag next">Next</span>
+        <h3>Toward launch</h3>
+        <ul>
+          <li>Balance from external playtests</li>
+          <li>Steam page, demo build and festival slot</li>
+          <li>More homes and a second weapon wave</li>
+          <li>Controller polish and Steam Deck verification</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="wrap contact">
+  <div class="ticket">
+    <h3>ADMIT ONE</h3>
+    <p data-i18n-html="contact">Contact: <a href="mailto:memoryinteractive@gmail.com">memoryinteractive@gmail.com</a> · Build and gameplay video available on request</p>
+  </div>
+</div>
+<footer>Treefall · footage captured in engine · October 2026</footer>
+
+<script>
+(function () {
+  var TR = {"A roguelike tower defense where a living tree carries a tower of living weapons, drawn like a 1930s cartoon and staged like a paper theatre.": "Yaşayan bir ağacın sırtında yaşayan silahlardan bir kule taşıdığı, 1930'ların çizgi filmleri gibi çizilip kâğıt tiyatro gibi sahnelenen bir roguelike kule savunma oyunu.", "Trailer · 90 seconds · in-engine footage": "Fragman · 90 saniye · oyun içi görüntü", "The show": "Oyun", "Build a tower one floor at a time, and keep it standing.": "Kuleyi kat kat kur, ayakta tut.", "Every floor of the tower is a weapon with a face: a minigun, a beehive, a flamethrower. Floors buff the floors next to them, two legendary neighbours fuse into an evolved weapon, and every boss you beat leaves a curse that makes the next act harder and the score bigger.": "Kulenin her katı yüzü olan bir silah: makineli, arı kovanı, alev makinesi. Katlar komşularını güçlendirir, iki efsanevi komşu tek bir evrim silahına dönüşür; yenilen her boss, sonraki perdeyi zorlaştıran ama skoru büyüten bir lanet bırakır.", "Genre": "Tür", "Roguelike tower defense": "Roguelike kule savunma", "Modes": "Modlar", "Normal · Hard · Endless": "Normal · Zor · Sonsuz", "Engine": "Motor", "Languages": "Diller", "English · Turkish": "İngilizce · Türkçe", "Target": "Hedef", "PC (Steam) · 2027": "PC (Steam) · 2027", "Why it plays differently": "Neden farklı oynanıyor", "Three decisions in every camp": "Her kampta üç karar", "Stack and link": "Diz ve bağla", "Floor order matters. Matching neighbours form pairs such as Oiled Flame or Charged Beam, and the non-firing Foreman floor powers the weapons above and below it.": "Katların sırası önemli. Uyumlu komşular Yağlı Alev ya da Yüklü Işın gibi eşleşmeler kurar; ateş etmeyen Ustabaşı katı üstündeki ve altındaki silahları güçlendirir.", "Fuse": "Birleştir", "Two adjacent Legendary floors can fuse into one of ten evolutions, freeing a slot and changing how the weapon fires.": "Yan yana iki Efsanevi kat on evrimden birine dönüşebilir; bir yuva boşalır ve silahın ateş biçimi değişir.", "Take the curse": "Laneti al", "After each boss you must pick a curse. Rarer curses hit harder and pay more score, so record runs are deliberate risks.": "Her boss'tan sonra bir lanet seçmek zorundasın. Nadir lanetler daha sert vurur ve daha çok skor verir; rekor koşular bilinçli alınan risklerdir.", "Programme": "Program", "Hard mode: three acts, then endless": "Zor mod: üç perde, sonra sonsuz", "Act I · waves 1–16": "I. perde · dalga 1–16", "The Grove": "Koruluk", "Slimes, shields and splitters. Learn to build.": "Slime'lar, kalkanlılar, bölünenler. Kurmayı öğren.", "Act II · waves 17–32": "II. perde · dalga 17–32", "The Pale Desert": "Solgun Çöl", "Sand gulpers and ash flies. Ash Shell climbs out of a rift at wave 32.": "Kum Yutanlar ve Kül Sinekleri. 32. dalgada Kül Kabuğu bir yarıktan çıkar.", "Act III · waves 33–48": "III. perde · dalga 33–48", "The Black Marsh": "Kara Bataklık", "Leeches and lantern bugs. Bog Mother rises at wave 48; endless follows.": "Sülükler ve Fener Böcekleri. 48. dalgada Batak Ana yükselir; ardından sonsuz mod.", "Cast list": "Oyuncu kadrosu", "Content in the current build": "Mevcut sürümdeki içerik", "Weapon floors": "Silah katı", "17 families including two support floors and the Foreman, plus 10 evolutions": "İki destek katı ve Ustabaşı dahil 17 aile, artı 10 evrim", "Enemy types": "Düşman türü", "6 base slimes and 7 biome variants, two of them flying; any of them can roll one of 8 affixes": "6 temel slime ve 7 biyom varyantı, ikisi uçan; hepsine 8 ekten biri gelebilir", "Bosses": "Boss", "Three grove bosses, Ash Shell and Bog Mother": "Üç koruluk boss'u, Kül Kabuğu ve Batak Ana", "Biomes": "Biyom", "Grove, Pale Desert, Black Marsh": "Koruluk, Solgun Çöl, Kara Bataklık", "Curses": "Lanet", "Four rarities each, stacking without limit in endless": "Her biri dört nadirlikte; sonsuzda sınırsız birikir", "Homes": "Ev", "Starting homes that change one rule each, with their own animated tree": "Her biri bir kuralı değiştiren, kendi animasyonlu ağacı olan başlangıç evleri", "Quests": "Görev", "Unlock weapons, homes, curses, charms, items and cosmetics": "Silah, ev, lanet, tılsım, eşya ve görünüm açar", "Challenges": "Meydan okuma", "Fixed rule sets with unique rewards, plus a boss rush": "Kendine özel ödüllü sabit kural setleri, artı boss koşusu", "Stills": "Görseller", "From the build": "Oyundan kareler", "Black Marsh": "Kara Bataklık", "Choosing a home": "Ev seçimi", "Ash Shell, wave 32": "Kül Kabuğu, 32. dalga", "An evolved floor": "Bir evrim katı", "Status": "Durum", "Where the production stands": "Üretim nerede", "Done": "Bitti", "Playable, content-complete core": "Oynanabilir, içeriği tamam çekirdek", "Normal (24 waves), Hard (48 waves + endless), challenges, boss rush": "Normal (24 dalga), Zor (48 dalga + sonsuz), meydan okumalar, boss koşusu", "Full art pass in one style, original ragtime score and synthesized sound effects": "Tek stilde tam sanat geçişi, özgün ragtime müzik ve sentez ses efektleri", "Quest and unlock progression, collection with item pool toggles": "Görev ve kilit açma ilerlemesi, havuzu açılıp kapanan koleksiyon", "English and Turkish text throughout": "Baştan sona İngilizce ve Türkçe metin", "Next": "Sırada", "Toward launch": "Çıkışa doğru", "Balance from external playtests": "Dış oyun testleriyle denge", "Steam page, demo build and festival slot": "Steam sayfası, demo ve festival", "More homes and a second weapon wave": "Daha fazla ev ve ikinci silah dalgası", "Controller polish and Steam Deck verification": "Oyun kolu cilası ve Steam Deck doğrulaması", "ADMIT ONE": "TEK KİŞİLİK", "Treefall · footage captured in engine · October 2026": "Treefall · görüntüler oyun içinden · Ekim 2026"}, HTML_TR = {"contact": "İletişim: <a href=\"mailto:memoryinteractive@gmail.com\">memoryinteractive@gmail.com</a> · Sürüm ve oynanış videosu istek üzerine"}, ALT_TR = {"A six-floor tower of weapons in the pale desert": "Solgun Çöl'de altı katlı silah kulesi", "Two legendary floors fusing into an evolved weapon": "İki efsanevi katın evrim silahına dönüşmesi", "The curse menu after a boss": "Boss sonrası lanet menüsü", "The grove": "Koruluk", "Ash Shell firing its mouth laser": "Ağız lazerini ateşleyen Kül Kabuğu", "Bog Mother rising from the marsh": "Bataklıktan yükselen Batak Ana", "Tower in the Black Marsh": "Kara Bataklık'ta kule", "Home selection screen": "Ev seçim ekranı", "Ash Shell boss fight": "Kül Kabuğu dövüşü", "Evolved weapon floor": "Evrim silah katı"};
+  var sel = 'h1,h2,h3,p,li,dt,dd,figcaption,td,.label,.screen-note,.no,.tag,footer';
+  var originals = null;
+  function capture() {
+    originals = [];
+    document.querySelectorAll(sel).forEach(function (el) {
+      if (el.dataset.i18nHtml) { originals.push({ el: el, html: el.innerHTML, key: el.dataset.i18nHtml }); return; }
+      if (el.children.length) return;
+      var t = el.textContent.trim();
+      if (TR[t] !== undefined) originals.push({ el: el, text: el.textContent, key: t });
+    });
+    document.querySelectorAll('img[alt]').forEach(function (img) {
+      if (ALT_TR[img.alt] !== undefined) originals.push({ el: img, alt: img.alt, key: img.alt });
+    });
+  }
+  function apply(lang) {
+    if (!originals) capture();
+    originals.forEach(function (o) {
+      if (o.html !== undefined) o.el.innerHTML = lang === 'tr' ? HTML_TR[o.key] : o.html;
+      else if (o.alt !== undefined) o.el.alt = lang === 'tr' ? ALT_TR[o.key] : o.alt;
+      else o.el.textContent = lang === 'tr' ? TR[o.key] : o.text;
+    });
+    document.documentElement.lang = lang;
+    document.title = 'Treefall Playbill';
+    ['en', 'tr'].forEach(function (l) { document.getElementById('lang-' + l).setAttribute('aria-pressed', String(l === lang)); });
+    try { localStorage.setItem('treefall-pitch-lang', lang); } catch (e) {}
+  }
+  document.querySelectorAll('.lang button').forEach(function (b) {
+    b.addEventListener('click', function () { apply(b.dataset.lang); });
+  });
+  var start = 'en';
+  if (location.hash === '#tr') start = 'tr';
+  else { try { if (localStorage.getItem('treefall-pitch-lang') === 'tr') start = 'tr'; } catch (e) {} }
+  if (start === 'tr') apply('tr');
+})();
+</script>
